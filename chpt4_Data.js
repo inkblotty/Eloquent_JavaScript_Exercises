@@ -80,11 +80,17 @@ function listToArray(lst){
   var newArr = [];
 
   for (var node=list; node; node=node.rest){ // method suggested by book
-    newArr.push(nth(lst, node.value-1)); // more research needed into node
+    newArr.push(nth(lst, node.value-1)); // see notes below
   }
+
+  /* with node, node === list, so while node still exists
+  (conditional) i.e. not null, it keeps looping. using 
+  recursion IN loop */
 
   return newArr;
 }
+
+var example = {value: 1, rest:{ value: 2, rest: {value: 3, rest: null}}}
 
 function prepend(element, lst){
   return { value:element, rest: lst };
