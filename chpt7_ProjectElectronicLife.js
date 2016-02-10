@@ -241,3 +241,31 @@ for (var i = 0; i < 5; i++) {
 // process without specifying # of turns
 
 /* MORE LIFE FORMS */
+// changes direction of creature based on
+// dir ("n", "sw", etc.) and n number of
+// clockwise turns (1 == 45deg clockwise;
+// -2 == 90deg counterclockwise)
+function dirPlus(dir, n) {
+	var index = directionNames.indexOf(dir);
+	return directionNames[(index + n + 8) % 8];
+}
+
+// new type of creature
+function WallFollower() {
+	this.dir = "s"; // default direction
+}
+
+WallFollower.prototype.act = function(view) {
+	var start = this.dir;
+	if (view.look(dirPlus(this.dir, -3)) != " ") {
+		start = this.dir = dirPlus(this.dir, -2);
+	}
+	while (view.look(this.dir) != " ") {
+		// if there's only empty space around,
+		// go straight until a wall is found
+		this.dir = dirPlus(this.dir, 1);
+		if (this.dir == start) break;
+	}
+	return {type: "move", direction: this.dir};
+};
+
