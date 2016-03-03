@@ -18,11 +18,12 @@ _root
 function urlToPath(url) {
 	var path = require('url').parse(url).pathname;
 	if (path.match(/\.\.\//)) {
-		path = path.replace(/\.\./, '');
+		path = path.replace(/\.\./g, '');
 		return '.' + decodeURIComponent(path);
 	}
 	else { return '.' + decodeURIComponent(path); }
 }
-
+/*
 console.log(urlToPath('/index.html'));
-console.log(urlToPath('../secret_stuff'));
+console.log(urlToPath('../../../secret_stuff'));
+*/
