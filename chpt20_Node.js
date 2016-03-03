@@ -4,6 +4,26 @@
 */
 
 // CONTENT NEGOTATION, AGAIN
+var http = require('http');
+
+var request = http.request({
+	host: 'eloquentjavascript.net',
+	method: 'GET',
+	path: '/author',
+	headers: {
+		'Accept': 'application/json',
+		'Accept': 'text/html',
+		'Accept': 'text/plain'
+	}
+}, function(response) {
+	response.on("error", function(error) {
+		console.log("Error: " + error);
+	});
+	response.on("data", function(chunk) {
+		process.stdout.write(chunk.toString());
+	});
+});
+request.end('Hello server');
 
 // FIXING A LEAK
 /*
