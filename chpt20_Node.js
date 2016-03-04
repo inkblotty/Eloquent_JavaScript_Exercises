@@ -5,7 +5,7 @@
 
 // CONTENT NEGOTATION, AGAIN
 var http = require('http');
-
+/*
 var request = http.request({
 	host: 'eloquentjavascript.net',
 	method: 'GET',
@@ -24,6 +24,7 @@ var request = http.request({
 	});
 });
 request.end('Hello server');
+*/
 
 // FIXING A LEAK
 /*
@@ -47,3 +48,28 @@ function urlToPath(url) {
 console.log(urlToPath('/index.html'));
 console.log(urlToPath('../../../secret_stuff'));
 */
+
+// CREATING DIRECTORIES
+var methods = Object.create(null);
+
+methods.MKCOL = function(path, respond) {
+  fs.stat(path, function(error, stats) {
+    if (stats.isDirectory())
+      respond(204);
+    if (stats.isFile())
+    	respond(400);
+    else if (error)
+      respond(500, error.toString());
+    else
+    	fs.mkdir(path, respondErrorOrNothing(respond));
+  });
+};
+
+function respondErrorOrNothing(respond) {
+  return function(error) {
+    if (error)
+      respond(500, error.toString());
+    else
+      respond(204);
+  };
+}
