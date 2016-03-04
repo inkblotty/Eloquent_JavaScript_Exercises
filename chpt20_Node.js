@@ -73,3 +73,5 @@ function respondErrorOrNothing(respond) {
       respond(204);
   };
 }
+
+// A PUBLIC SPACE ON THE WEB
